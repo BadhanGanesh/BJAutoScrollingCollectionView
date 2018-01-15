@@ -86,10 +86,10 @@ class BJAutoScrollingCollectionView: UICollectionView {
         DispatchQueue.main.async {
             let firstIndex = 0
             let lastIndex = self.numberOfItems(inSection: 0) - 1
-            let visibleCellsIndex = self.indexPathsForVisibleItems
+            let visibleCellsIndexes = self.indexPathsForVisibleItems.sorted()
             
-            if !visibleCellsIndex.isEmpty {
-                let nextIndex = visibleCellsIndex[0].row + 1
+            if !visibleCellsIndexes.isEmpty {
+                let nextIndex = visibleCellsIndexes[0].row + 1
                 let nextIndexPath: IndexPath = IndexPath.init(item: nextIndex, section: 0)
                 let firstIndexPath: IndexPath = IndexPath.init(item: firstIndex, section: 0)
                 
@@ -106,24 +106,26 @@ class BJAutoScrollingCollectionView: UICollectionView {
         DispatchQueue.main.async {
             let firstIndex = 0
             let lastIndex = self.numberOfItems(inSection: 0) - 1
-            let visibleCellsIndex = self.indexPathsForVisibleItems.sorted()
+            let visibleCellsIndexes = self.indexPathsForVisibleItems.sorted()
             
-            let nextIndex = visibleCellsIndex[0].row + 1
-            let previousIndex = visibleCellsIndex[0].row - 1
-            let nextIndexPath: IndexPath = IndexPath.init(item: nextIndex, section: 0)
-            let previousIndexPath: IndexPath = IndexPath.init(item: previousIndex, section: 0)
-            
-            if direction == .left {
-                if previousIndex < firstIndex {
-                    //Do your own thing.....
-                } else {
-                    self.scrollToItem(at: previousIndexPath, at: .centeredHorizontally, animated: true)
-                }
-            } else if direction == .right {
-                if nextIndex > lastIndex {
-                    //Do your own thing.....
-                } else {
-                    self.scrollToItem(at: nextIndexPath, at: .centeredHorizontally, animated: true)
+            if !visibleCellsIndexes.isEmpty {
+                let nextIndex = visibleCellsIndexes[0].row + 1
+                let previousIndex = visibleCellsIndexes[0].row - 1
+                let nextIndexPath: IndexPath = IndexPath.init(item: nextIndex, section: 0)
+                let previousIndexPath: IndexPath = IndexPath.init(item: previousIndex, section: 0)
+                
+                if direction == .left {
+                    if previousIndex < firstIndex {
+                        //Do your own thing.....
+                    } else {
+                        self.scrollToItem(at: previousIndexPath, at: .centeredHorizontally, animated: true)
+                    }
+                } else if direction == .right {
+                    if nextIndex > lastIndex {
+                        //Do your own thing.....
+                    } else {
+                        self.scrollToItem(at: nextIndexPath, at: .centeredHorizontally, animated: true)
+                    }
                 }
             }
         }
