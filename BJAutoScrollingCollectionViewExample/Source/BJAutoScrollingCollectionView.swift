@@ -93,11 +93,7 @@ class BJAutoScrollingCollectionView: UICollectionView {
                 let nextIndexPath: IndexPath = IndexPath.init(item: nextIndex, section: 0)
                 let firstIndexPath: IndexPath = IndexPath.init(item: firstIndex, section: 0)
                 
-                if nextIndex > lastIndex {
-                    self.scrollToItem(at: firstIndexPath, at: .centeredHorizontally, animated: true)
-                } else {
-                    self.scrollToItem(at: nextIndexPath, at: .centeredHorizontally, animated: true)
-                }
+                (nextIndex > lastIndex) ? (self.scrollToItem(at: firstIndexPath, at: .centeredHorizontally, animated: true)) : (self.scrollToItem(at: nextIndexPath, at: .centeredHorizontally, animated: true))
             }
         }
     }
@@ -114,20 +110,17 @@ class BJAutoScrollingCollectionView: UICollectionView {
                 let nextIndexPath: IndexPath = IndexPath.init(item: nextIndex, section: 0)
                 let previousIndexPath: IndexPath = IndexPath.init(item: previousIndex, section: 0)
                 
-                if direction == .left {
-                    if previousIndex < firstIndex {
-                        //Do your own thing.....
-                    } else {
-                        self.scrollToItem(at: previousIndexPath, at: .centeredHorizontally, animated: true)
-                    }
-                } else if direction == .right {
-                    if nextIndex > lastIndex {
-                        //Do your own thing.....
-                    } else {
-                        self.scrollToItem(at: nextIndexPath, at: .centeredHorizontally, animated: true)
-                    }
+                switch direction {
+                case .left:
+                    (previousIndex < firstIndex) ? self.doNothing() : self.scrollToItem(at: previousIndexPath, at: .centeredHorizontally, animated: true)
+                    break
+                case .right:
+                    (nextIndex > lastIndex) ? self.doNothing() : self.scrollToItem(at: nextIndexPath, at: .centeredHorizontally, animated: true)
+                    break
                 }
             }
         }
     }
+    
+    private func doNothing() { }
 }
