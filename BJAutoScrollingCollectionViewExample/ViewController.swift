@@ -61,8 +61,6 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         let cellIdentifier: String = "CustomImageCollectionCell"
         let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: cellIdentifier, for: indexPath) as! CustomImageCollectionViewCell
         
-        cell.imageView.clipsToBounds = true
-        cell.imageView.contentMode = .scaleAspectFill
         cell.imageView.image = self.imagesArray[indexPath.row]
         
         return cell
